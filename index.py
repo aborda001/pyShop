@@ -41,5 +41,50 @@ def nuevoproducto():
 
 	return "<p>Agregado</p>"
 
+@app.route("/nuevoingreso", methods=['POST'])
+def nuevoingreso():
+	monto = request.form['monto']
+	descripcion = request.form['descripcion']
+	fecha = request.form['fecha']
+	
+	conexion = sqlite3.connect('database.db')
+	cursor = conexion.cursor()
+
+	cursor.execute("INSERT INTO Ingresos VALUES(null,%s, '%s', '%s')"%(monto,descripcion,fecha))
+
+	conexion.commit()
+	cursor.close()
+	conexion.close()
+
+	Insertados = {
+		'monto:':monto,
+		'descripcion:':descripcion,
+		'fecha:':fecha
+	}		
+	return jsonify(Insertados)
+
+@app.route("/nuevoegreso", methods=['POST'])
+def nuevoegreso():
+	monto = request.form['monto']
+	descripcion = request.form['descripcion']
+	fecha = request.form['fecha']
+	
+	conexion = sqlite3.connect('database.db')
+	cursor = conexion.cursor()
+
+	cursor.execute("INSERT INTO Egresos VALUES(null,%s, '%s', '%s')"%(monto,descripcion,fecha))
+
+	conexion.commit()
+	cursor.close()
+	conexion.close()
+
+	Insertados = {
+		'monto:':monto,
+		'descripcion:':descripcion,
+		'fecha:':fecha
+	}		
+	return jsonify(Insertados)
+
+
 if __name__ == '__main__':
 	app.run(port=5000,host="127.0.0.1",debug=True)
