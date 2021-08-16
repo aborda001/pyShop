@@ -57,9 +57,9 @@ def nuevoingreso():
 	conexion.close()
 
 	Insertados = {
-		'monto:':monto,
-		'descripcion:':descripcion,
-		'fecha:':fecha
+		'monto':monto,
+		'descripcion':descripcion,
+		'fecha':fecha
 	}		
 	return jsonify(Insertados)
 
@@ -79,9 +79,9 @@ def nuevoegreso():
 	conexion.close()
 
 	Insertados = {
-		'monto:':monto,
-		'descripcion:':descripcion,
-		'fecha:':fecha
+		'monto':monto,
+		'descripcion':descripcion,
+		'fecha':fecha
 	}		
 	return jsonify(Insertados)
 
