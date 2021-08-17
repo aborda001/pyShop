@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, url_for
 import sqlite3
 
 app = Flask(__name__)
@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def inicio():
-	return "<p>hello</p>"
+	return render_template('index.html')
 
 @app.route("/productos", methods=['GET'])
 def productos():
