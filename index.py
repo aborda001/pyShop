@@ -8,6 +8,10 @@ app = Flask(__name__)
 def inicio():
 	return render_template('index.html')
 
+@app.route("/vender")
+def vender():
+	return render_template('vender.html')
+
 @app.route("/productos", methods=['GET'])
 def productos():
 	conexion = sqlite3.connect('database.db')
@@ -87,4 +91,6 @@ def nuevoegreso():
 
 
 if __name__ == '__main__':
-	app.run(port=5000,host="127.0.0.1",debug=True)
+	app.run(port=5000,
+		host="127.0.0.1",
+		debug=True)
