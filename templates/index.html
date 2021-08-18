@@ -1,48 +1,48 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="container my-5 mx-auto">
+  <div class="row">
 
-<div class="row">
-
-  <div class="card mx-2 my-2" style="width: 18rem;">
-    <img src="{{url_for('static', filename='imagenes/vender.png')}}" class="card-img-top mx-1">
-    <br>
-    <div class="card-body">
-      <h3 class="card-title fw-bold">Realizar venta</h3>
-      <p class="card-text text-muted">Procesar una venta</p>
+    <div class="card mx-2 my-2" style="width: 18rem;">
+      <img src="{{url_for('static', filename='imagenes/vender.png')}}" class="card-img-top mx-1">
       <br>
-      <a href="/vender" class="btn btn-primary">Ir a venta</a>
+      <div class="card-body">
+        <h3 class="card-title fw-bold">Realizar venta</h3>
+        <p class="card-text text-muted">Procesar una venta</p>
+        <br>
+        <a href="/vender" class="btn btn-primary">Ir a venta</a>
+      </div>
     </div>
-  </div>
 
-  <div class="card mx-2 my-2" style="width: 18rem;">
-    <img src="{{url_for('static', filename='imagenes/inventario.png')}}" class="card-img-top">
-    <br>
-    <div class="card-body">
-      <h3 class="card-title fw-bold">Ver inventario</h3>
-      <p class="card-text text-muted">Registrar, eliminar o actualizar productos.</p>
-      <a href="/inventario" class="btn btn-primary">Ir a inventario</a>
-    </div>
-  </div>
-
-  <div class="card mx-2 my-2" style="width: 18rem;">
-    <img src="{{url_for('static', filename='imagenes/caja.png')}}" class="card-img-top">
-    <br>
-    <div class="card-body">
-      <h3 class="card-title fw-bold">Caja</h3>
-      <p class="card-text text-muted">Registrar una salida o entrada de efectivo.</p>
-      <a href="/caja" class="btn btn-primary">Ir a caja</a>
-    </div>
-  </div>
-
-  <div class="card mx-2 my-2" style="width: 18rem;">
-    <img src="{{url_for('static', filename='imagenes/reporte.png')}}" class="card-img-top">
-    <br>
-    <div class="card-body">
-      <h3 class="card-title fw-bold">Reportes</h3>
-      <p class="card-text text-muted">Ver el reporte de caja.</p>
+    <div class="card mx-2 my-2" style="width: 18rem;">
+      <img src="{{url_for('static', filename='imagenes/inventario.png')}}" class="card-img-top">
       <br>
-      <a href="/caja" class="btn btn-primary">Ir a reporte</a>
+      <div class="card-body">
+        <h3 class="card-title fw-bold">Ver inventario</h3>
+        <p class="card-text text-muted">Registrar, eliminar o actualizar productos.</p>
+        <a href="/inventario" class="btn btn-primary">Ir a inventario</a>
+      </div>
     </div>
-  </div>
 
+    <div class="card mx-2 my-2" style="width: 18rem;">
+      <img src="{{url_for('static', filename='imagenes/caja.png')}}" class="card-img-top">
+      <br>
+      <div class="card-body">
+        <h3 class="card-title fw-bold">Caja</h3>
+        <p class="card-text text-muted">Registrar una salida o entrada de efectivo.</p>
+        <a href="/caja" class="btn btn-primary">Ir a caja</a>
+      </div>
+    </div>
+
+    <div class="card mx-2 my-2" style="width: 18rem;">
+      <img src="{{url_for('static', filename='imagenes/reporte.png')}}" class="card-img-top">
+      <br>
+      <div class="card-body">
+        <h3 class="card-title fw-bold">Reportes</h3>
+        <p class="card-text text-muted">Ver el reporte de caja.</p>
+        <br>
+        <a href="/caja" class="btn btn-primary">Ir a reporte</a>
+      </div>
+    </div>
+</div>
 {% endblock %}
