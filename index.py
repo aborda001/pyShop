@@ -22,9 +22,21 @@ def productos():
 	conexion.close()
 	return jsonify(productos)
 
-@app.route("/producto/<id>")
-def producto(id):
-	return f"<p>producto:{id} </p>"
+@app.route("/buscador", methods = ["POST"])
+def buscador():
+	conexion = sqlite3.connect('database.db')
+	cursor = conexion.cursor()
+	if request.method == 'POST':
+		buscar = request.form['consulta']
+		if buscar == '':
+			cursor.execute("SELECT * FROM Productos")
+			productos = cursor.fetchall()
+		else:
+			cursor.execute(f"SELECT * FROM Productos WHERE descripcionProducto LIKE '%{buscar}%'")
+			productos = cursor.fetchall()
+	cursor.close()
+	conexion.close()
+	return jsonify({'htmlresponse': render_template('response.html', productos=productos)})	
 
 @app.route("/nuevoproducto", methods=['POST'])
 def nuevoproducto():
