@@ -12,7 +12,7 @@ def inicio():
 def vender():
 	return render_template('vender.html')
 
-@app.route("/productos", methods=['GET'])
+@app.route("/inventario", methods=['GET'])
 def productos():
 	conexion = sqlite3.connect('database.db')
 	cursor = conexion.cursor()
@@ -20,7 +20,7 @@ def productos():
 	productos = cursor.fetchall()
 	cursor.close()
 	conexion.close()
-	return jsonify(productos)
+	return render_template("inventario.html", productos = productos)
 
 @app.route("/buscador", methods = ["POST"])
 def buscador():

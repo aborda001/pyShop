@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const spanFecha = document.getElementById('fechaNavegacion');
-
 	let fecha = new Date();
 
 	spanFecha.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
@@ -20,10 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	$('#buscador').keyup(function(){
 		let buscar = $(this).val();
-
-		if(buscar != ''){
-			cargarDatos(buscar);
-		}
+		cargarDatos(buscar);
 
 	});
 
