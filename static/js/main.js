@@ -1,9 +1,9 @@
-//document.addEventListener('DOMContentLoaded', function () {
-	const botonBuscar = document.getElementById('botonBuscar');
+document.addEventListener('DOMContentLoaded', function () {
+	const spanFecha = document.getElementById('fechaNavegacion');
 
-	botonBuscar.onclick = function () {
-		console.log("Presionado")	
-	}
+	let fecha = new Date();
+
+	spanFecha.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
 
 	function cargarDatos(consulta) {
 		$.ajax({
@@ -27,5 +27,4 @@
 
 	});
 
-
-//})
+})
