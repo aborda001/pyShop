@@ -26,17 +26,31 @@ def productos():
 def buscador():
 	conexion = sqlite3.connect('database.db')
 	cursor = conexion.cursor()
-	if request.method == 'POST':
-		buscar = request.form['consulta']
-		if buscar == '':
-			cursor.execute("SELECT * FROM Productos")
-			productos = cursor.fetchall()
-		else:
-			cursor.execute(f"SELECT * FROM Productos WHERE descripcionProducto LIKE '%{buscar}%'")
-			productos = cursor.fetchall()
+	buscar = request.form['consulta']
+	if buscar == '':
+		cursor.execute("SELECT * FROM Productos")
+		productos = cursor.fetchall()
+	else:
+		cursor.execute(f"SELECT * FROM Productos WHERE descripcionProducto LIKE '%{buscar}%'")
+		productos = cursor.fetchall()
 	cursor.close()
 	conexion.close()
-	return jsonify({'htmlresponse': render_template('response.html', productos=productos)})	
+	return jsonify({'htmlresponse': render_template('productosvender.html', productos=productos)})	
+
+@app.route("/buscarinventario", methods = ["POST"])
+def buscadorinventario():
+	conexion = sqlite3.connect('database.db')
+	cursor = conexion.cursor()
+	buscar = request.form['consulta']
+	if buscar == '':
+		cursor.execute("SELECT * FROM Productos")
+		productos = cursor.fetchall()
+	else:
+		cursor.execute(f"SELECT * FROM Productos WHERE descripcionProducto LIKE '%{buscar}%'")
+		productos = cursor.fetchall()
+	cursor.close()
+	conexion.close()
+	return jsonify({'htmlresponse': render_template('productosinventario.html', productos=productos)})		
 
 @app.route("/nuevoproducto", methods=['POST'])
 def nuevoproducto():

@@ -1,5 +1,29 @@
 {% extends "layout.html" %}
 {% block body %}
+	<div class="container px-5">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="input-group my-3">
+					<input type="text" placeholder="Ingrese producto a buscar" class="form-control" id="buscadorInventario">
+				</div>
+			</div>
+		</div>
+		<table class="table table-striped mt-5">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Codigo</th>
+					<th scope="col">Descripcion</th>
+					<th scope="col">Precio Compra</th>
+					<th scope="col">Precio Venta</th>
+					<th scope="col">Stock</th>
+					<th scope="col">Opciones</th>
+				</tr>
+			</thead>
+			<tbody id="tablainventario">
 
-
+			</tbody>
+		</table>
+		
+	</div>
 {% endblock %}
