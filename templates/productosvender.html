@@ -1,18 +1,7 @@
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th scope="col">Nombre</th>
-			<th scope="col">Precio</th>
-			<th scope="col">Cantidad</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for producto in productos %}
-		<tr id="{{producto[0]}}">
-			<td>{{producto[2]}}</td>
-			<td>{{producto[4]}}</td>
-			<td>{{producto[5]}}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+{% for producto in productos %}
+	<tr id="{{producto[0]}}">
+		<td>{{producto[2]}}</td>
+		<td>{{producto[4]}}</td>
+		<td>{{producto[5]}}</td>
+	</tr>
+{% endfor %}

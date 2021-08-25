@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const spanFecha = document.getElementById('fechaNavegacion');
+	const tbody = document.getElementById('resultado');
 	let fecha = new Date();
+
 	//Coloca la fecha en la navegacion
 	spanFecha.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
 
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			success:function (data) {
 				$('#resultado').html(data)
 				$("#resultado").append(data.htmlresponse);
-				console.log(data.htmlresponse);
+				//console.log(data.htmlresponse);
 			}
 		});
 	}
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			success:function (data) {
 				$('#tablainventario').html(data)
 				$("#tablainventario").append(data.htmlresponse);
-				console.log(data.htmlresponse);
+				//console.log(data.htmlresponse);
 			}	
 		});
 	}
@@ -47,4 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	datosInventario("");
-})
+	datosVenta("");
+
+
+	tbody.onclick = function (e) {
+		console.log(e.target.parentNode);
+	}
+		
+});
