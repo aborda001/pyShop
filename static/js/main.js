@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const spanFecha = document.getElementById('fechaNavegacion');
 	const tbody = document.getElementById('resultado');
+	const tablaLista = document.getElementById('tablaListaCompras')
+	const tbodyLista = tablaLista.getElementsByTagName('tbody')[0];
 	let fecha = new Date();
-
+	
 	//Coloca la fecha en la navegacion
 	spanFecha.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
 
@@ -33,6 +35,22 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
+	function agregarProducto(codigo,nombre,venta,id) {
+		const row = tbodyLista.insertRow()
+		row.innerHTML = `<td>${id++}</td>
+							<td>${codigo}</td>
+							<td>${nombre}</td>
+							<td>1</td>
+							<td>${venta}</td>
+							<td>${venta}</td>
+							<td>
+								<i class="fas fa-pen"></i>
+								<i class="fas fa-trash"></i>
+								<i class="fas fa-plus"></i>
+								<i class="fas fa-minus"></i>
+							</td>`
+	}
+
 	$('#buscador').keyup(function(){
 		//llama a la funcion para realizar la consulta
 		let buscar = $(this).val();
@@ -53,7 +71,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 	tbody.onclick = function (e) {
-		console.log(e.target.parentNode);
+		const fila = e.target.parentNode
+		const codigo = fila.children[0].childNodes[0].data;
+		const nombre = fila.children[1].childNodes[0].data;
+		const compra = fila.children[2].childNodes[0].data;
+		const venta = fila.children[3].childNodes[0].data;
+		const stock = fila.children[4].childNodes[0].data;
+
+		agregarProducto(codigo,nombre,venta,id);
 	}
 		
 });
