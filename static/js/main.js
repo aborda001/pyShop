@@ -1,12 +1,13 @@
+const spanFecha = document.getElementById('fechaNavegacion');
+let fecha = new Date();
+//Coloca la fecha en la navegacion
+spanFecha.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
+
 document.addEventListener('DOMContentLoaded', function () {
-	const spanFecha = document.getElementById('fechaNavegacion');
 	const tbody = document.getElementById('resultado');
-	const tablaLista = document.getElementById('tablaListaCompras')
+	const tablaLista = document.getElementById('tablaListaCompras');
 	const tbodyLista = tablaLista.getElementsByTagName('tbody')[0];
-	let fecha = new Date();
-	
-	//Coloca la fecha en la navegacion
-	spanFecha.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
+
 
 	function datosVenta(consulta) {
 		//Hace la consulta en la base de datos dependiendo de lo que se ingrese en el buscador
@@ -35,20 +36,58 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	function agregarProducto(codigo,nombre,venta,id) {
-		const row = tbodyLista.insertRow()
-		row.innerHTML = `<td>${id++}</td>
+	function agregarProducto(codigo,nombre,venta) {
+		const row = tbodyLista.insertRow();
+		let cantidad = 1;
+		row.innerHTML = `<td>#</td>
 							<td>${codigo}</td>
 							<td>${nombre}</td>
-							<td>1</td>
+							<td>${cantidad}</td>
 							<td>${venta}</td>
-							<td>${venta}</td>
+							<td>${venta * cantidad}</td>
 							<td>
-								<i class="fas fa-pen"></i>
-								<i class="fas fa-trash"></i>
-								<i class="fas fa-plus"></i>
-								<i class="fas fa-minus"></i>
+
 							</td>`
+		const botonEditar = document.createElement('button');
+		botonEditar.classList.add('btn', 'btn-success', 'ml-1');
+		botonEditar.innerHTML = '<i class="fas fa-pen"></i>';
+		row.children[6].appendChild(botonEditar);
+
+		const botonBorrar = document.createElement('button');
+		botonBorrar.classList.add('btn', 'btn-danger', 'ml-1');
+		botonBorrar.innerHTML = '<i class="fas fa-trash"></i>';
+		row.children[6].appendChild(botonBorrar);
+
+		const botonSumar = document.createElement('button');
+		botonSumar.classList.add('btn', 'btn-primary', 'ml-1');
+		botonSumar.innerHTML = '<i class="fas fa-plus"></i>';
+		row.children[6].appendChild(botonSumar);
+
+		const botonRestar = document.createElement('button');
+		botonRestar.classList.add('btn', 'btn-primary', 'ml-1');
+		botonRestar.innerHTML = '<i class="fas fa-minus"></i>';
+		row.children[6].appendChild(botonRestar);
+
+		botonEditar.onclick = () => {
+			console.log('Editando fila');
+		}
+
+		botonBorrar.onclick = () => {
+			console.log('Borrando fila');
+		}
+
+		botonSumar.onclick = () => {
+			cantidad++;
+			row.children[3].innerText = cantidad;
+			row.children[5].innerText = cantidad * venta;
+		}
+
+		botonRestar.onclick = () => {
+			cantidad--;
+			row.children[3].innerText = cantidad;
+			row.children[5].innerText = cantidad * venta;
+		}
+
 	}
 
 	$('#buscador').keyup(function(){
@@ -78,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		const venta = fila.children[3].childNodes[0].data;
 		const stock = fila.children[4].childNodes[0].data;
 
-		agregarProducto(codigo,nombre,venta,id);
+		agregarProducto(codigo,nombre,venta);
 	}
 		
 });
