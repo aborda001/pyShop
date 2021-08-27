@@ -3,6 +3,13 @@ let fecha = new Date();
 //Coloca la fecha en la navegacion
 spanFecha.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
 
+function formatearNumero(n) {
+	n = n*1;
+	n = String(n).replace(/\D/g, "");
+
+	return n === '' ? n : Number(n).toLocaleString();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 	const tbody = document.getElementById('resultado');
 	const tablaLista = document.getElementById('tablaListaCompras');
@@ -43,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
 							<td>${codigo}</td>
 							<td>${nombre}</td>
 							<td>${cantidad}</td>
-							<td>${venta}</td>
-							<td>${venta * cantidad}</td>
+							<td>${formatearNumero(venta)}</td>
+							<td>${formatearNumero(venta * cantidad)}</td>
 							<td>
 
 							</td>`
@@ -52,11 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonEditar.classList.add('btn', 'btn-success', 'ml-1');
 		botonEditar.innerHTML = '<i class="fas fa-pen"></i>';
 		row.children[6].appendChild(botonEditar);
-
-		const botonBorrar = document.createElement('button');
-		botonBorrar.classList.add('btn', 'btn-danger', 'ml-1');
-		botonBorrar.innerHTML = '<i class="fas fa-trash"></i>';
-		row.children[6].appendChild(botonBorrar);
 
 		const botonSumar = document.createElement('button');
 		botonSumar.classList.add('btn', 'btn-primary', 'ml-1');
@@ -67,6 +69,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonRestar.classList.add('btn', 'btn-primary', 'ml-1');
 		botonRestar.innerHTML = '<i class="fas fa-minus"></i>';
 		row.children[6].appendChild(botonRestar);
+
+		const botonBorrar = document.createElement('button');
+		botonBorrar.classList.add('btn', 'btn-danger', 'ml-1');
+		botonBorrar.innerHTML = '<i class="fas fa-trash"></i>';
+		row.children[6].appendChild(botonBorrar);
+
+		
 
 		botonEditar.onclick = () => {
 			console.log('Editando fila');
@@ -79,13 +88,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonSumar.onclick = () => {
 			cantidad++;
 			row.children[3].innerText = cantidad;
-			row.children[5].innerText = cantidad * venta;
+			row.children[5].innerText = formatearNumero(venta * cantidad);
 		}
 
 		botonRestar.onclick = () => {
 			cantidad--;
 			row.children[3].innerText = cantidad;
-			row.children[5].innerText = cantidad * venta;
+			row.children[5].innerText = formatearNumero(venta * cantidad);
 		}
 
 	}
