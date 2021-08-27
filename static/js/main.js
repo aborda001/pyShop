@@ -56,22 +56,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 							</td>`
 		const botonEditar = document.createElement('button');
-		botonEditar.classList.add('btn', 'btn-success', 'ml-1');
+		botonEditar.classList.add('btn', 'btn-success', 'mx-1');
 		botonEditar.innerHTML = '<i class="fas fa-pen"></i>';
 		row.children[6].appendChild(botonEditar);
 
 		const botonSumar = document.createElement('button');
-		botonSumar.classList.add('btn', 'btn-primary', 'ml-1');
+		botonSumar.classList.add('btn', 'btn-primary', 'mx-1');
 		botonSumar.innerHTML = '<i class="fas fa-plus"></i>';
 		row.children[6].appendChild(botonSumar);
 
 		const botonRestar = document.createElement('button');
-		botonRestar.classList.add('btn', 'btn-primary', 'ml-1');
+		botonRestar.classList.add('btn', 'btn-primary', 'mx-1');
 		botonRestar.innerHTML = '<i class="fas fa-minus"></i>';
 		row.children[6].appendChild(botonRestar);
 
 		const botonBorrar = document.createElement('button');
-		botonBorrar.classList.add('btn', 'btn-danger', 'ml-1');
+		botonBorrar.classList.add('btn', 'btn-danger', 'mx-1');
 		botonBorrar.innerHTML = '<i class="fas fa-trash"></i>';
 		row.children[6].appendChild(botonBorrar);
 
