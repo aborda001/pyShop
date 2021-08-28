@@ -30,19 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	function datosInventario(consulta) {
-		$.ajax({
-			url: "/buscarinventario",
-			method:"POST",
-			data:{consulta:consulta},
-			success:function (data) {
-				$('#tablainventario').html(data)
-				$("#tablainventario").append(data.htmlresponse);
-				//console.log(data.htmlresponse);
-			}	
-		});
-	}
-
 	function agregarProducto(codigo,nombre,venta) {
 		const row = tbodyLista.insertRow();
 		let cantidad = 1;
@@ -106,15 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	});
 
-
-	$('#buscadorInventario').keyup(function(){
-		//llama a la funcion para realizar la consulta
-		let buscar = $(this).val();
-		datosInventario(buscar);
-
-	});
-
-	datosInventario("");
 	datosVenta("");
 
 
