@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	const tbodyLista = tablaLista.getElementsByTagName('tbody')[0];
 	const botonVenta = document.getElementById('btnRegistrarVenta');
 	const noHay = document.getElementById('NoHay');
+	const ventaTotalSpan = document.getElementById('totalVenta');
+	let totalVenta = 0;
 	let idRow = 1;
 
 	function datosVenta(consulta) {
@@ -36,12 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		const row = tbodyLista.insertRow();
 		row.setAttribute('id',idRow++);
 		let cantidad = 1;
+		let total = cantidad * venta;
+		totalVenta = totalVenta + total;
+		ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
+
 		row.innerHTML = `<td>#</td>
 							<td>${codigo}</td>
 							<td>${nombre}</td>
 							<td>${cantidad}</td>
 							<td>${formatearNumero(venta)}</td>
-							<td>${formatearNumero(venta * cantidad)}</td>
+							<td>${formatearNumero(total)}</td>
 							<td>
 
 							</td>`
@@ -74,18 +80,28 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonBorrar.onclick = () => {
 			filaBorrar = row.getAttribute('id');
 			document.getElementById(filaBorrar).remove();
+			totalVenta = totalVenta - total;
+			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 		}
 
 		botonSumar.onclick = () => {
 			cantidad++;
 			row.children[3].innerText = cantidad;
 			row.children[5].innerText = formatearNumero(venta * cantidad);
+			let diferencia = total - (venta * cantidad);
+			total = venta * cantidad;
+			totalVenta = totalVenta - diferencia;
+			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 		}
 
 		botonRestar.onclick = () => {
 			cantidad--;
 			row.children[3].innerText = cantidad;
 			row.children[5].innerText = formatearNumero(venta * cantidad);
+			diferencia = total - (venta * cantidad);
+			total = venta * cantidad;
+			totalVenta = totalVenta - diferencia;
+			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 		}
 
 	}
