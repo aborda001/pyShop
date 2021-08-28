@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const botonVenta = document.getElementById('btnRegistrarVenta');
 	const noHay = document.getElementById('NoHay');
 	const ventaTotalSpan = document.getElementById('totalVenta');
+	const ventaTotalModal = document.getElementById('totalVentaModal');
 	let totalVenta = 0;
 	let idRow = 1;
 
@@ -137,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 	botonVenta.onclick = () =>	{
-		console.log("Registrar Venta")
+		ventaTotalModal.innerHTML = formatearNumero(totalVenta);
 	}
 		
 });
