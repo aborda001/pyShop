@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	const tbody = document.getElementById('resultado');
 	const tablaLista = document.getElementById('tablaListaCompras');
 	const tbodyLista = tablaLista.getElementsByTagName('tbody')[0];
+	const botonVenta = document.getElementById('btnRegistrarVenta');
+	let idRow = 1;
 
 
 	function datosVenta(consulta) {
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	function agregarProducto(codigo,nombre,venta) {
 		const row = tbodyLista.insertRow();
+		row.setAttribute('id',idRow++);
 		let cantidad = 1;
 		row.innerHTML = `<td>#</td>
 							<td>${codigo}</td>
@@ -69,7 +72,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 
 		botonBorrar.onclick = () => {
-			console.log('Borrando fila');
+			filaBorrar = row.getAttribute('id');
+			document.getElementById(filaBorrar).remove();
 		}
 
 		botonSumar.onclick = () => {
@@ -105,6 +109,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		const stock = fila.children[4].childNodes[0].data;
 
 		agregarProducto(codigo,nombre,venta);
+	}
+
+
+	botonVenta.onclick = () =>	{
+		console.log("Registrar Venta")
 	}
 		
 });
