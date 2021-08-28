@@ -13,13 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-$('#buscadorInventario').keyup(function(){
-		//llama a la funcion para realizar la consulta
-		let buscar = $(this).val();
-		datosInventario(buscar);
+	$('#buscadorInventario').keyup(function(){
+			//llama a la funcion para realizar la consulta
+			let buscar = $(this).val();
+			datosInventario(buscar);
 
-	});
+		});
 
-datosInventario("");
-console.clear()
+	datosInventario("");
 });
