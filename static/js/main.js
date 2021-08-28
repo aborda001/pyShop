@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	const tablaLista = document.getElementById('tablaListaCompras');
 	const tbodyLista = tablaLista.getElementsByTagName('tbody')[0];
 	const botonVenta = document.getElementById('btnRegistrarVenta');
+	const noHay = document.getElementById('NoHay');
 	let idRow = 1;
-
 
 	function datosVenta(consulta) {
 		//Hace la consulta en la base de datos dependiendo de lo que se ingrese en el buscador
@@ -107,6 +107,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		const compra = fila.children[2].childNodes[0].data;
 		const venta = fila.children[3].childNodes[0].data;
 		const stock = fila.children[4].childNodes[0].data;
+
+		if (noHay !== null){
+			noHay.remove();
+		}
 
 		agregarProducto(codigo,nombre,venta);
 	}
