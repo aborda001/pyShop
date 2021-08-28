@@ -102,6 +102,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			total = venta * cantidad;
 			totalVenta = totalVenta - diferencia;
 			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
+			if (cantidad === 0){
+				filaBorrar = row.getAttribute('id');
+				document.getElementById(filaBorrar).remove();
+			}
 		}
 
 	}
