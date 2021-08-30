@@ -11,6 +11,7 @@ function formatearNumero(n) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+	const fechaModal = document.getElementById('fechaModal');
 	const tbody = document.getElementById('resultado');
 	const tablaLista = document.getElementById('tablaListaCompras');
 	const tbodyLista = tablaLista.getElementsByTagName('tbody')[0];
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const ventaTotalModal = document.getElementById('totalVentaModal');
 	let totalVenta = 0;
 	let idRow = 1;
+	fechaModal.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
 
 	function datosVenta(consulta) {
 		//Hace la consulta en la base de datos dependiendo de lo que se ingrese en el buscador
