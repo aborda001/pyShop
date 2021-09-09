@@ -120,7 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		fila = document.getElementById(id);
 		precio = fila.children[4];
 		cantidad = fila.children[3].innerText;
-		precio.innerHTML = precioEditado;
+		precio.innerHTML = formatearNumero(precioEditado);
+		total = precio.innerText.replace(',','') * cantidad;
+		fila.children[5].innerText = formatearNumero(total);
 	}
 
 
@@ -160,8 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	btnEditarPrecio.onclick = () => {
 		let precionuevo = $(intEditarPrecio).val();
-		editarPrecio(filaEditar,formatearNumero(precionuevo));
+		editarPrecio(filaEditar,precionuevo);
 		$('#modalEditarPrecio').modal('hide');
 	}
-
 });
