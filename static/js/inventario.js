@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			success:function (data) {
 				$('#tablainventario').html(data)
 				$("#tablainventario").append(data.htmlresponse);
-				//console.log(data.htmlresponse);
 			}	
 		});
 	}

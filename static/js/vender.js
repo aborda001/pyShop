@@ -1,5 +1,3 @@
-
-
 function formatearNumero(n) {
 	n = n*1;
 	n = String(n).replace(/\D/g, "");
@@ -18,9 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	const ventaTotalModal = document.getElementById('totalVentaModal');
 	let totalVenta = 0;
 	let idRow = 1;
-	let fecha = neww Date();
-	fechaModal.innerHTML = `${fecha.getDate()}/${fecha.getMonth() + 1 }/${fecha.getFullYear()}`;
+	let fecha = new Date();
 
+	//Ajax Modal
 	function datosVenta(consulta) {
 		//Hace la consulta en la base de datos dependiendo de lo que se ingrese en el buscador
 		$.ajax({
@@ -30,11 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			success:function (data) {
 				$('#resultado').html(data)
 				$("#resultado").append(data.htmlresponse);
-				//console.log(data.htmlresponse);
 			}
 		});
 	}
 
+	//Agrega los productos a la lista la compra con todos los eventos de los botones
 	function agregarProducto(codigo,nombre,venta) {
 		const row = tbodyLista.insertRow();
 		row.setAttribute('id',idRow++);
@@ -75,7 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		
 
 		botonEditar.onclick = () => {
-			console.log('Editando fila');
+			filaEditar = row.getAttribute('id');
+			editarPrecio(filaEditar);
 		}
 
 		botonBorrar.onclick = () => {
@@ -111,6 +110,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	}
 
+	//Editar el precio del producto
+	function editarPrecio(id) {
+		
+	}
+
+
 	$('#buscador').keyup(function(){
 		//llama a la funcion para realizar la consulta
 		let buscar = $(this).val();
@@ -139,5 +144,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	botonVenta.onclick = () =>	{
 		ventaTotalModal.innerHTML = formatearNumero(totalVenta);
+		fechaModal.innerHTML = `${fecha.getDate()}/
+								${fecha.getMonth() + 1 }/
+								${fecha.getFullYear()}`;
 	}
 });
