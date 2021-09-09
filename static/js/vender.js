@@ -14,9 +14,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	const noHay = document.getElementById('NoHay');
 	const ventaTotalSpan = document.getElementById('totalVenta');
 	const ventaTotalModal = document.getElementById('totalVentaModal');
+	const precioAnterior = document.getElementById('precioAnterior');
+	const btnEditarPrecio = document.getElementById('btnEditarPrecio');
+	const intEditarPrecio = document.getElementById('intEditarPrecio');
 	let totalVenta = 0;
 	let idRow = 1;
 	let fecha = new Date();
+	let fila, precio;
 
 	//Ajax Modal
 	function datosVenta(consulta) {
@@ -74,7 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		botonEditar.onclick = () => {
 			filaEditar = row.getAttribute('id');
-			editarPrecio(filaEditar);
+			precioAnterior.innerHTML = formatearNumero(venta)
+			$('#modalEditarPrecio').modal('show');
 		}
 
 		botonBorrar.onclick = () => {
@@ -111,8 +116,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	//Editar el precio del producto
-	function editarPrecio(id) {
-		
+	function editarPrecio(id,precioEditado) {
+		fila = document.getElementById(id);
+		precio = fila.children[4];
+		cantidad = fila.children[3].innerText;
+		precio.innerHTML = precioEditado;
 	}
 
 
@@ -148,4 +156,12 @@ document.addEventListener('DOMContentLoaded', function () {
 								${fecha.getMonth() + 1 }/
 								${fecha.getFullYear()}`;
 	}
+
+
+	btnEditarPrecio.onclick = () => {
+		let precionuevo = $(intEditarPrecio).val();
+		editarPrecio(filaEditar,formatearNumero(precionuevo));
+		$('#modalEditarPrecio').modal('hide');
+	}
+
 });
