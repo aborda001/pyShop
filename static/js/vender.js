@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonSumar.onclick = () => {
 			cantidad++;
 			row.children[3].innerText = cantidad;
+			venta = row.children[4].innerText.replace(",","");
+			total = row.children[5].innerText.replace(",","");
 			row.children[5].innerText = formatearNumero(venta * cantidad);
 			let diferencia = total - (venta * cantidad);
 			total = venta * cantidad;
@@ -102,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonRestar.onclick = () => {
 			cantidad--;
 			row.children[3].innerText = cantidad;
+			venta = row.children[4].innerText.replace(",","");
+			total = row.children[5].innerText.replace(",","");
 			row.children[5].innerText = formatearNumero(venta * cantidad);
 			diferencia = total - (venta * cantidad);
 			total = venta * cantidad;
@@ -123,6 +127,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		precio.innerHTML = formatearNumero(precioEditado);
 		total = precio.innerText.replace(',','') * cantidad;
 		fila.children[5].innerText = formatearNumero(total);
+
+		diferencia = (precioEditado * cantidad);
+		totalVenta = totalVenta - diferencia;
+		ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 	}
 
 
