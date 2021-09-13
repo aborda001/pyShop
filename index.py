@@ -115,6 +115,12 @@ def nuevoegreso():
 	}		
 	return jsonify(Insertados)
 
+@app.route('/completarventa', methods=['POST'])
+def completarventa():
+	datosVenta = request.json
+	for dato in datosVenta:
+		print(datosVenta[dato])
+	return jsonify({'Recibido':"Recibido"})
 
 if __name__ == '__main__':
 	app.run(port=5000,

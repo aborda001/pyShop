@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			url:"/buscador",
 			method:"POST",
 			data:{consulta:consulta},
-			success:function (data) {
+			success: (data) => {
 				$('#resultado').html(data)
 				$("#resultado").append(data.htmlresponse);
 			}
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		totalVenta = totalVenta + total;
 		ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 
-		row.innerHTML = `<td>#</td>
+		row.innerHTML = `<td>${idRow - 1}</td>
 							<td>${codigo}</td>
 							<td>${nombre}</td>
 							<td>${cantidad}</td>
@@ -138,6 +138,30 @@ document.addEventListener('DOMContentLoaded', function () {
 		ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 	}
 
+	function completarVenta(cliente,total,fecha) {
+		cliente = cliente === '' ? 'Cliente ocacional': '';
+		
+		let datosVenta = {
+				Cliente: cliente,
+				Total: total,
+				Fecha: fecha
+			}
+
+		if (total != '0' ) {
+			$.ajax({
+				url: "/completarventa",
+				method:"POST",
+				contentType:"application/json",
+				dataType: "json",
+				data:JSON.stringify(datosVenta),
+				success: (data) => {
+					console.log(data);
+				},error: (error) => {
+                console.log(error);
+                }
+			});
+		}
+	}
 
 	$('#buscador').keyup(function(){
 		//llama a la funcion para realizar la consulta
@@ -185,8 +209,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		total = ventaTotalModal.innerText;
 		fecha = fechaModal.innerText;
 
-		console.log(cliente);
-		console.log(total);
-		console.log(fecha);
+		completarVenta(cliente,total,fecha);
 	}
 });
