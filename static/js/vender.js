@@ -88,6 +88,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			total = row.children[5].innerText.replace(",","");
 			totalVenta = totalVenta - total;
 			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
+			if (tbodyLista.firstElementChild === null) {
+				tbodyLista.appendChild(noHay);
+			}
 		}
 
 		botonSumar.onclick = () => {
