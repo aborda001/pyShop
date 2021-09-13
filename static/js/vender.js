@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const ventaTotalModal = document.getElementById('totalVentaModal');
 	const precioAnterior = document.getElementById('precioAnterior');
 	const btnEditarPrecio = document.getElementById('btnEditarPrecio');
-	const intEditarPrecio = document.getElementById('intEditarPrecio');
+	const btnGenerarVenta = document.getElementById('btnGenerarVenta');
 	let totalVenta = 0;
 	let idRow = 1;
 	let fecha = new Date();
@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonBorrar.onclick = () => {
 			filaBorrar = row.getAttribute('id');
 			document.getElementById(filaBorrar).remove();
+			total = row.children[5].innerText.replace(",","");
 			totalVenta = totalVenta - total;
 			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 		}
@@ -122,13 +123,14 @@ document.addEventListener('DOMContentLoaded', function () {
 	//Editar el precio del producto
 	function editarPrecio(id,precioEditado) {
 		fila = document.getElementById(id);
+		totalAnterior = fila.children[5].innerText.replace(",","");
 		precio = fila.children[4];
 		cantidad = fila.children[3].innerText;
 		precio.innerHTML = formatearNumero(precioEditado);
-		total = precio.innerText.replace(',','') * cantidad;
+		total = precioEditado * cantidad;
 		fila.children[5].innerText = formatearNumero(total);
 
-		diferencia = (precioEditado * cantidad);
+		diferencia = totalAnterior - (precioEditado * cantidad);
 		totalVenta = totalVenta - diferencia;
 		ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 	}
@@ -169,8 +171,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 	btnEditarPrecio.onclick = () => {
-		let precionuevo = $(intEditarPrecio).val();
+		let precionuevo = $('#intEditarPrecio').val();
 		editarPrecio(filaEditar,precionuevo);
 		$('#modalEditarPrecio').modal('hide');
+	}
+
+	btnGenerarVenta.onclick = () => {
+		let cliente,total,venta;
+		cliente = $('#nombreCliente').val();
+		total = ventaTotalModal.innerText;
+		fecha = fechaModal.innerText;
+
+		console.log(cliente);
+		console.log(total);
+		console.log(fecha);
 	}
 });
