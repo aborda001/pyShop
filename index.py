@@ -4,6 +4,17 @@ import sqlite3
 baseDeDatos = 'database.db'
 app = Flask(__name__)
 
+def ultimoId():
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+
+	cursor.execute("SELECT idVenta FROM Venta ORDER BY idVenta DESC LIMIT 1")
+
+	idVenta = cursor.fetchone()
+	cursor.close()
+	conexion.close()
+
+	return idVenta[0]
 
 @app.route("/")
 def inicio():
@@ -119,9 +130,43 @@ def nuevoegreso():
 @app.route('/completarventa', methods=['POST'])
 def completarventa():
 	datosVenta = request.json
-	for dato in datosVenta:
-		print(datosVenta[dato])
+	cliente = datosVenta['Cliente']
+	fecha = datosVenta['Fecha']
+	total = float(datosVenta['Total'])
+
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+
+	cursor.execute("INSERT INTO Venta VALUES(null,'%s', '%s', %s)" % (cliente,fecha,total))
+	conexion.commit()
+
+	cursor.close()
+	conexion.close()
+
 	return jsonify({'Recibido':"Recibido"})
+
+
+@app.route('/detalleventa', methods=['POST'])
+def detalleventa():
+	datosDetalle = request.json
+	idVenta = ultimoId()
+
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+
+	for dato in datosDetalle:
+		idProducto = int(dato['idProducto'])
+		cantidad = int(dato['cantidad'])
+		precio = float(dato['precio'])
+		total = float(dato['total'])
+
+		cursor.execute("INSERT INTO Detalle VALUES(null,%s, %s, %s, %s, %s)" % (idVenta,idProducto,cantidad,precio,total))
+		conexion.commit()
+
+	cursor.close()
+	conexion.close()
+
+	return jsonify({'Respuesta:':f"Recibi {len(datosDetalle)} productos"})
 
 if __name__ == '__main__':
 	app.run(port=5000,

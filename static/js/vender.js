@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		
 		let datosVenta = {
 				Cliente: cliente,
+				Fecha: fecha,
 				Total: total,
-				Fecha: fecha
 			}
 
 		if (total != '0' ) {
@@ -70,8 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		for (lista of tbodyLista.children) {
  			idProducto = lista.getAttribute('idProducto');
  			cantidad = lista.children[3].innerText;
- 			precio = lista.children[4].innerText;
-			total = lista.children[5].innerText;
+ 			precio = lista.children[4].innerText.replace(',','');
+			total = lista.children[5].innerText.replace(',','');
 			detalle = {
 				'idProducto':idProducto,
 				'cantidad':cantidad,
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		
 		$.ajax({
-			url:'/detalleVenta',
+			url:'/detalleventa',
 			method:'POST',
 			contentType:"application/json",
 			dataType:"json",
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	btnGenerarVenta.onclick = () => {
 		let cliente,total,venta;
 		cliente = $('#nombreCliente').val();
-		total = ventaTotalModal.innerText;
+		total = ventaTotalModal.innerText.replace(',','');
 		fecha = fechaModal.innerText;
 
 		completarVenta(cliente,total,fecha);
