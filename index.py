@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, url_for
 import sqlite3
 
+baseDeDatos = 'database.db'
 app = Flask(__name__)
 
 
@@ -14,7 +15,7 @@ def vender():
 
 @app.route("/inventario", methods=['GET'])
 def productos():
-	conexion = sqlite3.connect('database.db')
+	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
 	cursor.execute("SELECT * FROM productos")
 	productos = cursor.fetchall()
@@ -24,7 +25,7 @@ def productos():
 
 @app.route("/buscador", methods = ["POST"])
 def buscador():
-	conexion = sqlite3.connect('database.db')
+	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
 	buscar = request.form['consulta']
 	if buscar == '':
@@ -39,7 +40,7 @@ def buscador():
 
 @app.route("/buscarinventario", methods = ["POST"])
 def buscadorinventario():
-	conexion = sqlite3.connect('database.db')
+	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
 	buscar = request.form['consulta']
 	if buscar == '':
@@ -60,7 +61,7 @@ def nuevoproducto():
 	precioVentaProducto = request.form['precioVentaProducto']
 	stockProducto = request.form['stockProducto']
 
-	conexion = sqlite3.connect('database.db')
+	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
 
 	cursor.execute("INSERT INTO Productos VALUES(null,'%s','%s',%s,%s,%s)"%(codigoProducto,descripcionProducto,precioCompraProducto,precioVentaProducto,stockProducto))
@@ -77,7 +78,7 @@ def nuevoingreso():
 	descripcion = request.form['descripcion']
 	fecha = request.form['fecha']
 	
-	conexion = sqlite3.connect('database.db')
+	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
 
 	cursor.execute("INSERT INTO Ingresos VALUES(null,%s, '%s', '%s')"%(monto,descripcion,fecha))
@@ -99,7 +100,7 @@ def nuevoegreso():
 	descripcion = request.form['descripcion']
 	fecha = request.form['fecha']
 	
-	conexion = sqlite3.connect('database.db')
+	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
 
 	cursor.execute("INSERT INTO Egresos VALUES(null,%s, '%s', '%s')"%(monto,descripcion,fecha))
