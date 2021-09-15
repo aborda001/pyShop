@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	let fecha = new Date();
 	let fila, precio;
 
+
 	//Ajax Modal
 	function datosVenta(consulta) {
 		//Hace la consulta en la base de datos dependiendo de lo que se ingrese en el buscador
@@ -36,10 +37,69 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
+	function completarVenta(cliente,total,fecha) {
+		cliente = cliente === '' ? 'Cliente ocacional': '';
+		
+		let datosVenta = {
+				Cliente: cliente,
+				Total: total,
+				Fecha: fecha
+			}
+
+		if (total != '0' ) {
+			$.ajax({
+				url: "/completarventa",
+				method:"POST",
+				contentType:"application/json",
+				dataType: "json",
+				data:JSON.stringify(datosVenta),
+				success: (data) => {
+					console.log(data);
+				},error: (error) => {
+                console.log(error);
+                }
+			});
+			enviarDetalleVenta();
+		}
+	}
+
+	function enviarDetalleVenta() {
+		let detallesVenta = []
+		let idProducto,cantidad,precio,total,detalle;
+
+		for (lista of tbodyLista.children) {
+ 			idProducto = lista.getAttribute('idProducto');
+ 			cantidad = lista.children[3].innerText;
+ 			precio = lista.children[4].innerText;
+			total = lista.children[5].innerText;
+			detalle = {
+				'idProducto':idProducto,
+				'cantidad':cantidad,
+				'precio':precio.replace(',',''),
+				'total':total.replace(',','')
+			}
+			detallesVenta.push(detalle);
+		}
+		
+		$.ajax({
+			url:'/detalleVenta',
+			method:'POST',
+			contentType:"application/json",
+			dataType:"json",
+			data:JSON.stringify(detallesVenta),
+			success: (data) => {
+				console.log(data);
+			},error: (error) => {
+				console.log(error);
+			}
+		});
+	}
+
 	//Agrega los productos a la lista la compra con todos los eventos de los botones
-	function agregarProducto(codigo,nombre,venta) {
+	function agregarProducto(codigo,nombre,venta,idProducto) {
 		const row = tbodyLista.insertRow();
 		row.setAttribute('id',idRow++);
+		row.setAttribute('idProducto',idProducto);
 		let cantidad = 1;
 		let total = cantidad * venta;
 		totalVenta = totalVenta + total;
@@ -138,30 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 	}
 
-	function completarVenta(cliente,total,fecha) {
-		cliente = cliente === '' ? 'Cliente ocacional': '';
-		
-		let datosVenta = {
-				Cliente: cliente,
-				Total: total,
-				Fecha: fecha
-			}
-
-		if (total != '0' ) {
-			$.ajax({
-				url: "/completarventa",
-				method:"POST",
-				contentType:"application/json",
-				dataType: "json",
-				data:JSON.stringify(datosVenta),
-				success: (data) => {
-					console.log(data);
-				},error: (error) => {
-                console.log(error);
-                }
-			});
-		}
-	}
 
 	$('#buscador').keyup(function(){
 		//llama a la funcion para realizar la consulta
@@ -175,6 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	tbody.onclick = function (e) {
 		const fila = e.target.parentNode
+		const idProducto = fila.getAttribute('id');
 		const codigo = fila.children[0].childNodes[0].data;
 		const nombre = fila.children[1].childNodes[0].data;
 		const compra = fila.children[2].childNodes[0].data;
@@ -185,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			noHay.remove();
 		}
 
-		agregarProducto(codigo,nombre,venta);
+		agregarProducto(codigo,nombre,venta,idProducto);
 	}
 
 
