@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			if (precionuevo > 0){
 				$.notify('El precio ha sido editado', 'success');
 				editarPrecio(filaEditar,precionuevo);
+				$('#intEditarPrecio').val('');
 				$('#modalEditarPrecio').modal('hide');
 			} else {
 				$.notify('El precio debe ser mayor a 0', 'warning');
@@ -259,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (precionuevo > 0){
 			$.notify('El precio ha sido editado', 'success');
 			editarPrecio(filaEditar,precionuevo);
+			$('#intEditarPrecio').val('');
 			$('#modalEditarPrecio').modal('hide');
 		} else {
 			$.notify('El precio debe ser mayor a 0', 'warning');
