@@ -17,24 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	const precioAnterior = document.getElementById('precioAnterior');
 	const btnEditarPrecio = document.getElementById('btnEditarPrecio');
 	const btnGenerarVenta = document.getElementById('btnGenerarVenta');
-	let lugarAlert = document.getElementById('lugarAlert');
 	let totalVenta = 0;
 	let idRow = 1;
 	let fecha = new Date();
 	let fila, precio;
-
-
-	function alert(mensaje, tipo) {
-		let espacio = document.createElement('div');
-		espacio.innerHTML = `<div class="alert alert-${tipo} alert-dismissible" role="alert">
-							<h3>${mensaje}</h3>
-							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>`
-
-		lugarAlert.append(espacio);
-	}
-
-
 
 	//Ajax Modal
 	function datosVenta(consulta) {
@@ -67,16 +53,14 @@ document.addEventListener('DOMContentLoaded', function () {
 				dataType: "json",
 				data:JSON.stringify(datosVenta),
 				success: (data) => {
-					console.log(data);
+					$.notify('La venta se ha procesado correctamente', 'success');
+					enviarDetalleVenta();
 				},error: (error) => {
-                console.log(error);
+                	$.notify('Ha ocurrido un grave error, vuelve a intentarlo mas tarde', 'danger');
                 }
 			});
-			alert('La venta se ha procesado correctamente', 'success');
-			enviarDetalleVenta();
 		} else{
-			alert('El valor de la venta no puede ser 0', 'danger');
-			
+			$.notify("El total de la venta debe ser mayor O", "warning");
 		}
 	}
 
@@ -110,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function () {
 				console.log(error);
 			}
 		});
-		setTimeout( () => {location.reload();}, 1500);
+		setTimeout( () => {
+			location.reload();
+		}, 1900);
 		
 
 	}
@@ -226,6 +212,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	});
 
+	$("#intEditarPrecio").keydown(function (e) {
+		if (e.keyCode == 13) {
+			let precionuevo = $('#intEditarPrecio').val();
+			if (precionuevo > 0){
+				$.notify('El precio ha sido editado', 'success');
+				editarPrecio(filaEditar,precionuevo);
+				$('#modalEditarPrecio').modal('hide');
+			} else {
+				$.notify('El precio debe ser mayor a 0', 'warning');
+			}
+		}
+	});
+
 	datosVenta("");
 
 
@@ -242,6 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			noHay.remove();
 		}
 
+		$.notify('El producto ha sido agregado a la lista', 'success');
 		agregarProducto(codigo,nombre,venta,idProducto);
 	}
 
@@ -256,8 +256,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	btnEditarPrecio.onclick = () => {
 		let precionuevo = $('#intEditarPrecio').val();
-		editarPrecio(filaEditar,precionuevo);
-		$('#modalEditarPrecio').modal('hide');
+		if (precionuevo > 0){
+			$.notify('El precio ha sido editado', 'success');
+			editarPrecio(filaEditar,precionuevo);
+			$('#modalEditarPrecio').modal('hide');
+		} else {
+			$.notify('El precio debe ser mayor a 0', 'warning');
+		}
 	}
 
 	btnGenerarVenta.onclick = () => {
