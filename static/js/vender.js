@@ -17,10 +17,23 @@ document.addEventListener('DOMContentLoaded', function () {
 	const precioAnterior = document.getElementById('precioAnterior');
 	const btnEditarPrecio = document.getElementById('btnEditarPrecio');
 	const btnGenerarVenta = document.getElementById('btnGenerarVenta');
+	let lugarAlert = document.getElementById('lugarAlert');
 	let totalVenta = 0;
 	let idRow = 1;
 	let fecha = new Date();
 	let fila, precio;
+
+
+	function alert(mensaje, tipo) {
+		let espacio = document.createElement('div');
+		espacio.innerHTML = `<div class="alert alert-${tipo} alert-dismissible" role="alert">
+							<h3>${mensaje}</h3>
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>`
+
+		lugarAlert.append(espacio);
+	}
+
 
 
 	//Ajax Modal
@@ -38,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function completarVenta(cliente,total,fecha) {
-		cliente = cliente === '' ? 'Cliente ocacional': '';
+		cliente = cliente === '' ? 'Cliente ocacional': cliente;
 		
 		let datosVenta = {
 				Cliente: cliente,
@@ -59,7 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(error);
                 }
 			});
+			alert('La venta se ha procesado correctamente', 'success');
 			enviarDetalleVenta();
+		} else{
+			alert('El valor de la venta no puede ser 0', 'danger');
+			
 		}
 	}
 
@@ -93,6 +110,9 @@ document.addEventListener('DOMContentLoaded', function () {
 				console.log(error);
 			}
 		});
+		setTimeout( () => {location.reload();}, 1500);
+		
+
 	}
 
 	//Agrega los productos a la lista la compra con todos los eventos de los botones
