@@ -24,6 +24,77 @@
 			</tbody>
 		</table>
 	</div>
+	<!-- Boton Agregar Nuevo Producto -->
+	<footer>
+			<div class="container fixed-bottom mb-5">
+				<div class="row mb-5">
+					<div class="row">
+						<div class="col-8"></div>
+						<div class="col-4">
+							<button type="button" class="btn btn-primary btn-lg fs-4" id="btnAgregarProducto" data-bs-target="#modalProducto" data-bs-toggle="modal">Agregar Producto</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	<!-- Modal para Agregar producto -->
+		<div class="modal fade" id="modalProducto" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Editar precio</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="input-group mb-3">
+							<span class="input-group-text fs-5 fw-bolder">Codigo:</span>
+							<input placeholder="Codigo" type="text" 
+									class="form-control fs-5" aria-label="Sizing example input" 
+									aria-describedby="inputGroup-sizing-default" 
+									autocomplete="off" id="codigoProducto">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text fs-5 fw-bolder">Descripcion:</span>
+							<input placeholder="Descripcion" type="text" 
+									class="form-control fs-5" aria-label="Sizing example input" 
+									aria-describedby="inputGroup-sizing-default" 
+									autocomplete="off" id="codigoProducto">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text fs-5 fw-bolder">Compra:</span>
+							<input placeholder="Precio compra" type="text" 
+									class="form-control fs-5" aria-label="Sizing example input" 
+									aria-describedby="inputGroup-sizing-default" 
+									autocomplete="off" id="precioCompraProducto">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text fs-5 fw-bolder">Venta:</span>
+							<input placeholder="Precio Venta" type="text" 
+									class="form-control fs-5" aria-label="Sizing example input" 
+									aria-describedby="inputGroup-sizing-default" 
+									autocomplete="off" id="precioVentaProducto">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text fs-5 fw-bolder">Stock:</span>
+							<input placeholder="Cantidad en stock" type="text" 
+									class="form-control fs-5" aria-label="Sizing example input" 
+									aria-describedby="inputGroup-sizing-default" 
+									autocomplete="off" id="stockProducto">
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-primary" id="btnEditarPrecio">Editar Precio</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	<script src="../static/js/inventario.js"></script>
 {% endblock %}
 
