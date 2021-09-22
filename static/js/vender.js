@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				dataType: "json",
 				data:JSON.stringify(datosVenta),
 				success: (data) => {
-					$.notify('La venta se ha procesado correctamente', 'success');
 					enviarDetalleVenta();
 				},error: (error) => {
                 	$.notify('Ha ocurrido un grave error, vuelve a intentarlo mas tarde', 'danger');
@@ -89,9 +88,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			dataType:"json",
 			data:JSON.stringify(detallesVenta),
 			success: (data) => {
-				console.log(data);
+				$.notify('La venta se ha procesado correctamente', 'success');
 			},error: (error) => {
-				console.log(error);
+				$.notify('Ha ocurrido un grave error, vuelve a intentarlo mas tarde', 'danger');
 			}
 		});
 		setTimeout( () => {
