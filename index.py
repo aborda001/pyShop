@@ -66,11 +66,12 @@ def buscadorinventario():
 
 @app.route("/nuevoproducto", methods=['POST'])
 def nuevoproducto():
-	codigoProducto = request.form['codigoProducto']
-	descripcionProducto = request.form['descripcionProducto']
-	precioCompraProducto = request.form['precioCompraProducto']
-	precioVentaProducto = request.form['precioVentaProducto']
-	stockProducto = request.form['stockProducto']
+	datosProductos = request.json
+	codigoProducto = datosProductos['codigoProducto']
+	descripcionProducto = datosProductos['descripcionProducto']
+	precioCompraProducto = datosProductos['precioCompraProducto']
+	precioVentaProducto = datosProductos['precioVentaProducto']
+	stockProducto = datosProductos['stockProducto']
 
 	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
@@ -80,8 +81,9 @@ def nuevoproducto():
 	conexion.commit()
 	cursor.close()
 	conexion.close()
+	
 
-	return "<p>Agregado</p>"
+	return jsonify({'Recibido':"Recibido"})
 
 @app.route("/nuevoingreso", methods=['POST'])
 def nuevoingreso():
