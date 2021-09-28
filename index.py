@@ -121,6 +121,18 @@ def actualizarProducto(id):
 
 	return render_template("inventario.html")
 
+@app.route("/eliminarProducto/<id>")
+def eliminarProducto(id):
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+
+	cursor.execute("DELETE FROM Productos WHERE idProducto = %s" % (id))
+
+	conexion.commit()
+	cursor.close()
+	conexion.close()
+	return render_template("inventario.html")
+
 @app.route("/nuevoingreso", methods=['POST'])
 def nuevoingreso():
 	monto = request.form['monto']
