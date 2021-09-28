@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+	<div class="row">
+		<div class="col-md-4 offset-md-4">
+			<div class="card card-body">
+				<form action="/actualizarProducto/{{producto[0]}}" method="POST">
+					<div class="mb-3">
+						<label for="codigoProducto" class="form-label">Codigo del producto</label>
+						<input type="text" class="form-control" id="codigoProducto" autocomplete="off" value="{{producto[1]}}" name="codigoProducto">
+					</div>
+					<div class="mb-3">
+						<label for="descripcionProducto" class="form-label">Descripcion del Producto</label>
+						<input type="text" class="form-control" id="descripcionProducto" autocomplete="off" value="{{producto[2]}}" name="descripcionProducto">
+					</div>
+					<div class="mb-3">
+						<label for="precioCompraProducto" class="form-label">Precio compra</label>
+						<input type="text" class="form-control" id="precioCompraProducto" autocomplete="off" value="{{producto[3]}}" name="precioCompraProducto">
+					</div>
+					<div class="mb-3">
+						<label for="precioVentaProducto" class="form-label">Precio Venta</label>
+						<input type="text" class="form-control" id="precioVentaProducto" autocomplete="off" value="{{producto[4]}}" name="precioVentaProducto">
+					</div>
+					<div class="mb-3">
+						<label for="stockProducto" class="form-label">Stock</label>
+						<input type="text" class="form-control" id="stockProducto" autocomplete="off" value="{{producto[5]}}" name="stockProducto">
+					</div>
+					<button type="submit" class="btn btn-primary">Actualizar producto</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
