@@ -85,6 +85,42 @@ def nuevoproducto():
 
 	return jsonify({'Recibido':"Recibido"})
 
+@app.route("/actualizarProducto/<id>", methods=['POST', 'GET'])
+def actualizarProducto(id):
+	if request.method == 'GET':
+		conexion = sqlite3.connect(baseDeDatos)
+		cursor = conexion.cursor()
+		cursor.execute("SELECT * FROM Productos WHERE idProducto = '%s'" % (id))
+		producto = cursor.fetchone()
+		cursor.close()
+		conexion.close()
+		return render_template("editarProducto.html",producto = producto)
+
+	codigoProducto = request.form['codigoProducto']
+	descripcionProducto = request.form['descripcionProducto']
+	precioCompraProducto = float(request.form['precioCompraProducto'])
+	precioVentaProducto = float(request.form['precioVentaProducto'])
+	stockProducto = int(request.form['stockProducto'])
+
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+
+	cursor.execute("""UPDATE Productos SET 
+					codigoProducto = '%s',
+					descripcionProducto = '%s',
+					precioCompraProducto = %s,
+					precioVentaProducto = %s,
+					stockProducto = %s
+					WHERE idProducto = %s
+					 """%
+					 (codigoProducto,descripcionProducto,precioCompraProducto,precioVentaProducto,stockProducto,id))
+
+	conexion.commit()
+	cursor.close()
+	conexion.close()
+
+	return render_template("inventario.html")
+
 @app.route("/nuevoingreso", methods=['POST'])
 def nuevoingreso():
 	monto = request.form['monto']
