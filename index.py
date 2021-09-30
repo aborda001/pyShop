@@ -133,6 +133,10 @@ def eliminarProducto(id):
 	conexion.close()
 	return render_template("inventario.html")
 
+@app.route("/caja")
+def caja():
+	return render_template("caja.html")
+
 @app.route("/nuevoingreso", methods=['POST'])
 def nuevoingreso():
 	monto = request.form['monto']
