@@ -1,5 +1,51 @@
 {% extends "layout.html" %}
 {% block body %}
-
-
-{% endblock %}
+	<div class="container px-1">
+		<button type="button" class="btn btn-primary btn-lg px-5">Hoy</button>
+		<button type="button" class="btn btn-primary btn-lg">Esta semana</button>
+		<button type="button" class="btn btn-primary btn-lg">Este mes</button>
+	</div>
+	<!-- Boton para agregar nuevo ingreso/egreso -->
+	<footer>
+		<div class="container fixed-bottom mb-5">
+			<div class="row mb-5">
+				<div class="row">
+					<div class="col-9"></div>
+					<div class="col-3">
+						<button type="button" class="btn btn-success btn-lg fs-4" id="btnAgregarEgresoIngreso" data-bs-target="#modalEgresoIngreso" data-bs-toggle="modal">Agregar Ingreso/Egreso</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Modal para Agregar nuevo egreso/ingreso -->
+	<div class="modal fade" id="modalEgresoIngreso" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Agregar nuevo Ingreso/Egreso</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="codigoProducto" class="form-label">Fecha</label>
+						<input type="text" class="form-control" id="fechaModalIE" autocomplete="off">
+					</div>
+					<div class="mb-3">
+						<label for="descripcionProducto" class="form-label">Descripcion</label>
+						<input type="text" class="form-control" id="descripcionIE" autocomplete="off">
+					</div>
+					<div class="mb-3">
+						<label for="precioCompraProducto" class="form-label">Monto</label>
+						<input type="text" class="form-control" id="montoEI" autocomplete="off">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-warning" id="btnAgregarEgreso">Egreso</button>
+					<button type="button" class="btn btn-success" id="btnAgregarIngreso">Ingreso</button>
+				</div>
+			</div>
+		</div>
+		
+	{% endblock %}
