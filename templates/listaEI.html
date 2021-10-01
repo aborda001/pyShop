@@ -1,0 +1,51 @@
+<div class="container">
+	<div class="row justify-content-between">
+		<div class="col-4">
+			<div class="input-group mb-3">
+				<span class="input-group-text fs-4 fw-bolder">Ingresos: $</span>
+				<span class="input-group-text fs-4" id="spanIngresos">{{totalIngreso}}</span>
+			</div>
+			<table class="table table-striped mt-5">
+				<thead>
+					<tr>
+						<th scope="col">Monton</th>
+						<th scope="col">Descripcion</th>
+						<th scope="col">Fecha</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for ingreso in ingresos %}
+						<tr>
+							<td>{{ingreso[1]}}</td>
+							<td>{{ingreso[2]}}</td>
+							<td>{{ingreso[3]}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="col-4">
+			<div class="input-group mb-3">
+				<span class="input-group-text fs-4 fw-bolder">Egresos: $</span>
+				<span class="input-group-text fs-4" id="spanEgresos">{{totalIngreso}}</span>
+			</div>
+			<table class="table table-striped mt-5">
+				<thead>
+					<tr>
+						<th scope="col">Monton</th>
+						<th scope="col">Descripcion</th>
+						<th scope="col">Fecha</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for egreso in egresos %}
+						<tr>
+							<td>{{egreso[1]}}</td>
+							<td>{{egreso[2]}}</td>
+							<td>{{egreso[3]}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</div>
+		</div>
+	</div>
