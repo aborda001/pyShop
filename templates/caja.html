@@ -2,8 +2,12 @@
 {% block body %}
 	<div class="container px-1">
 		<button type="button" class="btn btn-primary btn-lg px-5">Hoy</button>
-		<button type="button" class="btn btn-primary btn-lg">Esta semana</button>
 		<button type="button" class="btn btn-primary btn-lg">Este mes</button>
+		<button type="button" class="btn btn-primary btn-lg">Este año</button>
+	</div>
+	<!-- Lista de Ingresos y Egresos -->
+	<div id="ingresosEgresos" class="py-5">
+		
 	</div>
 	<!-- Boton para agregar nuevo ingreso/egreso -->
 	<footer>
@@ -28,15 +32,15 @@
 				</div>
 				<div class="modal-body">
 					<div class="mb-3">
-						<label for="codigoProducto" class="form-label">Fecha</label>
+						<label for="fechaModalIE" class="form-label">Fecha</label>
 						<input type="text" class="form-control" id="fechaModalIE" autocomplete="off">
 					</div>
 					<div class="mb-3">
-						<label for="descripcionProducto" class="form-label">Descripcion</label>
+						<label for="descripcionIE" class="form-label">Descripcion</label>
 						<input type="text" class="form-control" id="descripcionIE" autocomplete="off">
 					</div>
 					<div class="mb-3">
-						<label for="precioCompraProducto" class="form-label">Monto</label>
+						<label for="montoEI" class="form-label">Monto</label>
 						<input type="text" class="form-control" id="montoEI" autocomplete="off">
 					</div>
 				</div>
@@ -47,5 +51,5 @@
 				</div>
 			</div>
 		</div>
-		
+		<script src="../static/js/caja.js"></script>
 	{% endblock %}
