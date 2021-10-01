@@ -64,6 +64,30 @@ def buscadorinventario():
 	conexion.close()
 	return jsonify({'htmlresponse': render_template('productosinventario.html', productos=productos)})		
 
+@app.route("/listaIngresoEgreso", methods = ["POST"])
+def listaIngresoEgreso():
+	consulta = request.form['consulta']
+	totalIngreso = 0
+	totalEgreso = 0
+
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+	cursor.execute("SELECT * FROM Ingresos")
+	ingresos = cursor.fetchall()
+
+	cursor.execute("SELECT * FROM Egresos")
+	egresos = cursor.fetchall()
+
+	cursor.close()
+	conexion.close()
+
+	for ingreso in ingresos:
+		totalIngreso += int(ingreso[1])
+	for egreso in egresos:
+		totalEgreso += int(egreso[1])
+
+	return jsonify({'htmlresponse': render_template('listaEI.html', ingresos=ingresos, egresos=egresos, totalIngreso=totalIngreso, totalEgreso=totalEgreso)})
+
 @app.route("/nuevoproducto", methods=['POST'])
 def nuevoproducto():
 	datosProductos = request.json
