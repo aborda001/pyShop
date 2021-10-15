@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
 	<div class="container px-1">
-		<button type="button" class="btn btn-primary btn-lg px-5">Hoy</button>
-		<button type="button" class="btn btn-primary btn-lg">Este mes</button>
-		<button type="button" class="btn btn-primary btn-lg">Este año</button>
+		<button type="button" class="btn btn-primary btn-lg px-5" id="btnHoy">Hoy</button>
+		<button type="button" class="btn btn-primary btn-lg" id="btnMes">Este mes</button>
+		<button type="button" class="btn btn-primary btn-lg" id="btnAno">Este año</button>
 	</div>
 	<!-- Lista de Ingresos y Egresos -->
 	<div id="ingresosEgresos" class="py-5">
@@ -33,15 +33,15 @@
 				<div class="modal-body">
 					<div class="mb-3">
 						<label for="fechaModalIE" class="form-label">Fecha</label>
-						<input type="text" class="form-control" id="fechaModalIE" autocomplete="off">
+						<input type="text" class="form-control" id="fechaModalIE" autocomplete="off" value="" placeholder="dd/mm/aaaa">
 					</div>
 					<div class="mb-3">
 						<label for="descripcionIE" class="form-label">Descripcion</label>
-						<input type="text" class="form-control" id="descripcionIE" autocomplete="off">
+						<input type="text" class="form-control" id="descripcionIE" autocomplete="off" value=" ">
 					</div>
 					<div class="mb-3">
 						<label for="montoEI" class="form-label">Monto</label>
-						<input type="text" class="form-control" id="montoEI" autocomplete="off">
+						<input type="text" class="form-control" id="montoIE" autocomplete="off" value=" ">
 					</div>
 				</div>
 				<div class="modal-footer">
