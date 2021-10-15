@@ -1,3 +1,12 @@
 body {
 	background-color: #d9e0de; /*#f7eeeeeb*/
 }
+
+.scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+.table-wrapper {
+display: block;
+}
