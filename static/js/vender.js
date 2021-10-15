@@ -1,11 +1,11 @@
 function formatearNumero(n) {
-	n = n*1;
+	n = n * 1;
 	n = String(n).replace(/\D/g, "");
 
 	return n === '' ? n : Number(n).toLocaleString();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 	const fechaModal = document.getElementById('fechaModal');
 	const tbody = document.getElementById('resultado');
 	const tablaLista = document.getElementById('tablaListaCompras');
@@ -26,9 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	function datosVenta(consulta) {
 		//Hace la consulta en la base de datos dependiendo de lo que se ingrese en el buscador
 		$.ajax({
-			url:"/buscador",
-			method:"POST",
-			data:{consulta:consulta},
+			url: "/buscador",
+			method: "POST",
+			data: {
+				consulta: consulta
+			},
 			success: (data) => {
 				$('#resultado').html(data)
 				$("#resultado").append(data.htmlresponse);
@@ -36,75 +38,75 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	function completarVenta(cliente,total,fecha) {
-		cliente = cliente === '' ? 'Cliente ocacional': cliente;
-		
-		let datosVenta = {
-				Cliente: cliente,
-				Fecha: fecha,
-				Total: total,
-			}
+	function completarVenta(cliente, total, fecha) {
+		cliente = cliente === '' ? 'Cliente ocacional' : cliente;
 
-		if (total != '0' ) {
+		let datosVenta = {
+			Cliente: cliente,
+			Fecha: fecha,
+			Total: total,
+		}
+
+		if (total != '0') {
 			$.ajax({
 				url: "/completarventa",
-				method:"POST",
-				contentType:"application/json",
+				method: "POST",
+				contentType: "application/json",
 				dataType: "json",
-				data:JSON.stringify(datosVenta),
+				data: JSON.stringify(datosVenta),
 				success: (data) => {
 					enviarDetalleVenta();
-				},error: (error) => {
-                	$.notify('Ha ocurrido un grave error, vuelve a intentarlo mas tarde', 'danger');
-                }
+				},
+				error: (error) => {
+					$.notify('Ha ocurrido un grave error, vuelve a intentarlo mas tarde', 'danger');
+				}
 			});
-		} else{
+		} else {
 			$.notify("El total de la venta debe ser mayor O", "warning");
 		}
 	}
 
 	function enviarDetalleVenta() {
 		let detallesVenta = []
-		let idProducto,cantidad,precio,total,detalle;
+		let idProducto, cantidad, precio, total, detalle;
 
 		for (lista of tbodyLista.children) {
- 			idProducto = lista.getAttribute('idProducto');
- 			cantidad = lista.children[3].innerText;
- 			precio = lista.children[4].innerText.replace(',','');
-			total = lista.children[5].innerText.replace(',','');
+			idProducto = lista.getAttribute('idProducto');
+			cantidad = lista.children[3].innerText;
+			precio = lista.children[4].innerText.replace(',', '');
+			total = lista.children[5].innerText.replace(',', '');
 			detalle = {
-				'idProducto':idProducto,
-				'cantidad':cantidad,
-				'precio':precio.replace(',',''),
-				'total':total.replace(',','')
+				'idProducto': idProducto,
+				'cantidad': cantidad,
+				'precio': precio.replace(',', ''),
+				'total': total.replace(',', '')
 			}
 			detallesVenta.push(detalle);
 		}
-		
+
 		$.ajax({
-			url:'/detalleventa',
-			method:'POST',
-			contentType:"application/json",
-			dataType:"json",
-			data:JSON.stringify(detallesVenta),
+			url: '/detalleventa',
+			method: 'POST',
+			contentType: "application/json",
+			dataType: "json",
+			data: JSON.stringify(detallesVenta),
 			success: (data) => {
 				$.notify('La venta se ha procesado correctamente', 'success');
-			},error: (error) => {
+				setTimeout(() => {
+					location.reload();
+				}, 1900);
+			},
+			error: (error) => {
 				$.notify('Ha ocurrido un grave error, vuelve a intentarlo mas tarde', 'danger');
 			}
 		});
-		setTimeout( () => {
-			location.reload();
-		}, 1900);
-		
-
 	}
 
 	//Agrega los productos a la lista la compra con todos los eventos de los botones
-	function agregarProducto(codigo,nombre,venta,idProducto) {
+	function agregarProducto(codigo, nombre, venta, idProducto) {
 		const row = tbodyLista.insertRow();
-		row.setAttribute('id',idRow++);
-		row.setAttribute('idProducto',idProducto);
+		row.setAttribute('id', idRow++);
+		row.setAttribute('idProducto', idProducto);
 		let cantidad = 1;
 		let total = cantidad * venta;
 		totalVenta = totalVenta + total;
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonBorrar.innerHTML = '<i class="fas fa-trash"></i>';
 		row.children[6].appendChild(botonBorrar);
 
-		
+
 
 		botonEditar.onclick = () => {
 			filaEditar = row.getAttribute('id');
@@ -150,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonBorrar.onclick = () => {
 			filaBorrar = row.getAttribute('id');
 			document.getElementById(filaBorrar).remove();
-			total = row.children[5].innerText.replace(",","");
+			total = row.children[5].innerText.replace(",", "");
 			totalVenta = totalVenta - total;
 			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 			if (tbodyLista.firstElementChild === null) {
@@ -161,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonSumar.onclick = () => {
 			cantidad++;
 			row.children[3].innerText = cantidad;
-			venta = row.children[4].innerText.replace(",","");
-			total = row.children[5].innerText.replace(",","");
+			venta = row.children[4].innerText.replace(",", "");
+			total = row.children[5].innerText.replace(",", "");
 			row.children[5].innerText = formatearNumero(venta * cantidad);
 			let diferencia = total - (venta * cantidad);
 			total = venta * cantidad;
@@ -173,14 +175,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		botonRestar.onclick = () => {
 			cantidad--;
 			row.children[3].innerText = cantidad;
-			venta = row.children[4].innerText.replace(",","");
-			total = row.children[5].innerText.replace(",","");
+			venta = row.children[4].innerText.replace(",", "");
+			total = row.children[5].innerText.replace(",", "");
 			row.children[5].innerText = formatearNumero(venta * cantidad);
 			diferencia = total - (venta * cantidad);
 			total = venta * cantidad;
 			totalVenta = totalVenta - diferencia;
 			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
-			if (cantidad === 0){
+			if (cantidad === 0) {
 				filaBorrar = row.getAttribute('id');
 				document.getElementById(filaBorrar).remove();
 			}
@@ -189,9 +191,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	//Editar el precio del producto
-	function editarPrecio(id,precioEditado) {
+	function editarPrecio(id, precioEditado) {
 		fila = document.getElementById(id);
-		totalAnterior = fila.children[5].innerText.replace(",","");
+		totalAnterior = fila.children[5].innerText.replace(",", "");
 		precio = fila.children[4];
 		cantidad = fila.children[3].innerText;
 		precio.innerHTML = formatearNumero(precioEditado);
@@ -204,19 +206,19 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 
-	$('#buscador').keyup(function(){
+	$('#buscador').keyup(function() {
 		//llama a la funcion para realizar la consulta
 		let buscar = $(this).val();
 		datosVenta(buscar);
 
 	});
 
-	$("#intEditarPrecio").keydown(function (e) {
+	$("#intEditarPrecio").keydown(function(e) {
 		if (e.keyCode == 13) {
 			let precionuevo = $('#intEditarPrecio').val();
-			if (precionuevo > 0){
+			if (precionuevo > 0) {
 				$.notify('El precio ha sido editado', 'success');
-				editarPrecio(filaEditar,precionuevo);
+				editarPrecio(filaEditar, precionuevo);
 				$('#intEditarPrecio').val('');
 				$('#modalEditarPrecio').modal('hide');
 			} else {
@@ -228,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	datosVenta("");
 
 
-	tbody.onclick = function (e) {
+	tbody.onclick = function(e) {
 		const fila = e.target.parentNode
 		const idProducto = fila.getAttribute('id');
 		const codigo = fila.children[0].childNodes[0].data;
@@ -237,16 +239,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		const venta = fila.children[3].childNodes[0].data;
 		const stock = fila.children[4].childNodes[0].data;
 
-		if (noHay !== null){
+		if (noHay !== null) {
 			noHay.remove();
 		}
 
 		$.notify('El producto ha sido agregado a la lista', 'success');
-		agregarProducto(codigo,nombre,venta,idProducto);
+		agregarProducto(codigo, nombre, venta, idProducto);
 	}
 
 
-	botonVenta.onclick = () =>	{
+	botonVenta.onclick = () => {
 		ventaTotalModal.innerHTML = formatearNumero(totalVenta);
 		fechaModal.innerHTML = `${fecha.getDate()}/
 								${fecha.getMonth() + 1 }/
@@ -256,9 +258,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	btnEditarPrecio.onclick = () => {
 		let precionuevo = $('#intEditarPrecio').val();
-		if (precionuevo > 0){
+		if (precionuevo > 0) {
 			$.notify('El precio ha sido editado', 'success');
-			editarPrecio(filaEditar,precionuevo);
+			editarPrecio(filaEditar, precionuevo);
 			$('#intEditarPrecio').val('');
 			$('#modalEditarPrecio').modal('hide');
 		} else {
@@ -267,11 +269,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	btnGenerarVenta.onclick = () => {
-		let cliente,total,venta;
+		let cliente, total, venta;
 		cliente = $('#nombreCliente').val();
-		total = ventaTotalModal.innerText.replace(',','');
+		total = ventaTotalModal.innerText.replace(',', '');
 		fecha = fechaModal.innerText;
 
-		completarVenta(cliente,total,fecha);
+		completarVenta(cliente, total, fecha);
 	}
 });
