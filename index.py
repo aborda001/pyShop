@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template, url_for
 import sqlite3
+from datetime import date
 
 baseDeDatos = 'database.db'
 app = Flask(__name__)
@@ -15,6 +16,33 @@ def ultimoId():
 	conexion.close()
 
 	return idVenta[0]
+
+def filtroFecha(array,filtro):
+	anoActual,mesActual,diaActual = str(date.today()).split("-")
+	nuevoArray = []
+	total = 0
+	if filtro == "hoy":
+		for elemento in array:
+			diaArray,mesArray,anoArray = elemento[3].split("/")
+			if diaArray == diaActual:
+				nuevoArray.append(elemento)
+				total += int(elemento[1])
+		return nuevoArray,total
+	elif filtro == "mes":
+		for elemento in array:
+			diaArray,mesArray,anoArray = elemento[3].split("/")
+			if mesArray == mesActual:
+				nuevoArray.append(elemento)
+				total += int(elemento[1])
+		return nuevoArray,total
+	elif filtro == "ano":
+		for elemento in array:
+			diaArray,mesArray,anoArray = elemento[3].split("/")
+			if anoArray == anoActual:
+				nuevoArray.append(elemento)
+				total += int(elemento[1])
+		return nuevoArray,total
+
 
 @app.route("/")
 def inicio():
@@ -66,7 +94,7 @@ def buscadorinventario():
 
 @app.route("/listaIngresoEgreso", methods = ["POST"])
 def listaIngresoEgreso():
-	consulta = request.form['consulta']
+	consulta = request.form['consulta'].lower()
 	totalIngreso = 0
 	totalEgreso = 0
 
@@ -80,6 +108,11 @@ def listaIngresoEgreso():
 
 	cursor.close()
 	conexion.close()
+
+	if consulta != "todos":
+		ingresos,totalIngreso = filtroFecha(ingresos,consulta)
+		egresos,totalEgreso = filtroFecha(egresos,consulta)
+		return jsonify({'htmlresponse': render_template('listaEI.html', ingresos=ingresos, egresos=egresos, totalIngreso=totalIngreso, totalEgreso=totalEgreso)})
 
 	for ingreso in ingresos:
 		totalIngreso += int(ingreso[1])
@@ -176,12 +209,7 @@ def nuevoingreso():
 	cursor.close()
 	conexion.close()
 
-	Insertados = {
-		'monto':monto,
-		'descripcion':descripcion,
-		'fecha':fecha
-	}		
-	return jsonify(Insertados)
+	return jsonify({'Recibido':"Recibido"})
 
 @app.route("/nuevoegreso", methods=['POST'])
 def nuevoegreso():
@@ -197,13 +225,8 @@ def nuevoegreso():
 	conexion.commit()
 	cursor.close()
 	conexion.close()
-
-	Insertados = {
-		'monto':monto,
-		'descripcion':descripcion,
-		'fecha':fecha
-	}		
-	return jsonify(Insertados)
+	
+	return jsonify({'Recibido':"Recibido"})
 
 @app.route('/completarventa', methods=['POST'])
 def completarventa():
