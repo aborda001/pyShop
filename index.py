@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template, url_for
 import sqlite3
+from datetime import date
 from funciones import *
 
 baseDeDatos = 'database.db'
@@ -22,6 +23,14 @@ def productos():
 	cursor.close()
 	conexion.close()
 	return render_template("inventario.html", productos = productos)
+
+@app.route("/caja")
+def caja():
+	return render_template("caja.html")
+
+@app.route("/reporte")
+def reporte():
+	return render_template("reporte.html")
 
 @app.route("/buscador", methods = ["POST"])
 def buscador():
@@ -81,6 +90,28 @@ def listaIngresoEgreso():
 		totalEgreso += int(egreso[1])
 
 	return jsonify({'htmlresponse': render_template('listaEI.html', ingresos=ingresos, egresos=egresos, totalIngreso=totalIngreso, totalEgreso=totalEgreso)})
+
+@app.route("/listareporte", methods=['POST'])
+def listareporte():
+	consulta = request.form['consulta'].lower()
+
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+
+	cursor.execute("SELECT * FROM Ingresos")
+	ingresos = cursor.fetchall()
+
+	cursor.execute("SELECT * FROM Egresos")
+	egresos = cursor.fetchall()
+
+	cursor.execute("SELECT * FROM Venta")
+	venta = cursor.fetchall()
+
+	_,totalIngreso = filtroFecha(ingresos, consulta)
+	_,totalEgreso = filtroFecha(egresos, consulta)
+	_,totalVenta = filtroFecha(venta, consulta)
+
+	return jsonify({'htmlresponse': render_template('listareporte.html', totalIngreso=totalIngreso, totalEgreso=totalEgreso, totalVenta=totalVenta)})
 
 @app.route("/nuevoproducto", methods=['POST'])
 def nuevoproducto():
@@ -151,10 +182,6 @@ def eliminarProducto(id):
 	conexion.close()
 	return render_template("inventario.html")
 
-@app.route("/caja")
-def caja():
-	return render_template("caja.html")
-
 @app.route("/nuevoingreso", methods=['POST'])
 def nuevoingreso():
 	monto = request.form['monto']
@@ -191,15 +218,16 @@ def nuevoegreso():
 
 @app.route('/completarventa', methods=['POST'])
 def completarventa():
+	ano,mes,dia = str(date.today()).split("-")
 	datosVenta = request.json
 	cliente = datosVenta['Cliente']
-	fecha = datosVenta['Fecha']
+	fecha = f"{dia}/{mes}/{ano}"
 	total = float(datosVenta['Total'])
 
 	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
 
-	cursor.execute("INSERT INTO Venta VALUES(null,'%s', '%s', %s)" % (cliente,fecha,total))
+	cursor.execute("INSERT INTO Venta VALUES(null,%s, '%s', '%s')" % (total,cliente,fecha))
 	conexion.commit()
 
 	cursor.close()
