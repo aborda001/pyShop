@@ -24,19 +24,19 @@ def filtroFecha(array,filtro):
 			diaArray,mesArray,anoArray = elemento[3].split("/")
 			if diaArray == diaActual:
 				nuevoArray.append(elemento)
-				total += int(elemento[1])
+				total += float(elemento[1])
 		return nuevoArray,total
 	elif filtro == "mes":
 		for elemento in array:
 			diaArray,mesArray,anoArray = elemento[3].split("/")
 			if mesArray == mesActual:
 				nuevoArray.append(elemento)
-				total += int(elemento[1])
+				total += float(elemento[1])
 		return nuevoArray,total
 	elif filtro == "ano":
 		for elemento in array:
 			diaArray,mesArray,anoArray = elemento[3].split("/")
 			if anoArray == anoActual:
 				nuevoArray.append(elemento)
-				total += int(elemento[1])
+				total += float(elemento[1])
 		return nuevoArray,total
