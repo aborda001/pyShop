@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
-
-
+	<!-- FILTROS -->
+	<div class="container px-1">
+		<button type="button" class="btn btn-primary btn-lg px-5" id="btnHoy">Hoy</button>
+		<button type="button" class="btn btn-primary btn-lg" id="btnMes">Este mes</button>
+		<button type="button" class="btn btn-primary btn-lg" id="btnAno">Este año</button>
+	</div>
+	<!-- Lista de Ingresos y Egresos -->
+	<div id="reporte" class="py-5">
+		
+	</div>
+	<!-- JAVASCRIPT -->
+	<script src="../static/js/reporte.js"></script>
 {% endblock %}
