@@ -107,11 +107,21 @@ def listareporte():
 	cursor.execute("SELECT * FROM Venta")
 	venta = cursor.fetchall()
 
+	cursor.close()
+	conexion.close()
+
 	_,totalIngreso = filtroFecha(ingresos, consulta)
 	_,totalEgreso = filtroFecha(egresos, consulta)
 	_,totalVenta = filtroFecha(venta, consulta)
 
-	return jsonify({'htmlresponse': render_template('listareporte.html', totalIngreso=totalIngreso, totalEgreso=totalEgreso, totalVenta=totalVenta)})
+	totalCaja = (totalIngreso + totalVenta) - totalEgreso
+
+	totalVenta = '{:,}'.format(totalVenta)
+	totalIngreso = '{:,}'.format(totalIngreso)
+	totalEgreso = '{:,}'.format(totalEgreso)
+	totalCaja = '{:,}'.format(totalCaja)
+
+	return jsonify({'htmlresponse': render_template('listareporte.html', totalIngreso=totalIngreso, totalEgreso=totalEgreso, totalVenta=totalVenta, totalCaja=totalCaja)})
 
 @app.route("/nuevoproducto", methods=['POST'])
 def nuevoproducto():
