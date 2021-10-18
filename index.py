@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template, url_for
-import sqlite3
+import sqlite3,re
 from datetime import date
 from funciones import *
 
@@ -232,7 +232,7 @@ def completarventa():
 	datosVenta = request.json
 	cliente = datosVenta['Cliente']
 	fecha = f"{dia}/{mes}/{ano}"
-	total = float(datosVenta['Total'])
+	total = float(re.sub("\,|\.","",datosVenta['Total']))
 
 	conexion = sqlite3.connect(baseDeDatos)
 	cursor = conexion.cursor()
