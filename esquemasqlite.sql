@@ -42,3 +42,12 @@ CREATE TABLE IF NOT EXISTS Egresos (
 	descripcion TEXT NOT NULL,
 	fecha TEXT NOT NULL
 );
+
+CREATE TRIGGER restar_stock 
+    AFTER INSERT ON Detalle
+    FOR EACH ROW
+BEGIN
+    UPDATE Productos
+    SET stockProducto = stockProducto - NEW.cantidad
+    WHERE idProducto = NEW.idProducto;
+END;
