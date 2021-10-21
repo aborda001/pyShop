@@ -3,7 +3,7 @@ import sqlite3,re
 from datetime import date
 from funciones import *
 
-baseDeDatos = 'database.db'
+baseDeDatos = 'database.sqlite'
 app = Flask(__name__)
 
 @app.route("/")
@@ -270,5 +270,4 @@ def detalleventa():
 
 if __name__ == '__main__':
 	app.run(port=5000,
-		host="127.0.0.1",
-		debug=True)
+		host="127.0.0.1")

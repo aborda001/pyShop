@@ -1,7 +1,7 @@
 from datetime import date
 import sqlite3
 
-baseDeDatos = 'database.db'
+baseDeDatos = 'database.sqlite'
 
 def ultimoId():
 	conexion = sqlite3.connect(baseDeDatos)
