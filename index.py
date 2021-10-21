@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, url_for
+from flask import Flask, request, jsonify, render_template, url_for, redirect
 import sqlite3,re
 from datetime import date
 from funciones import *
@@ -178,7 +178,7 @@ def actualizarProducto(id):
 	cursor.close()
 	conexion.close()
 
-	return render_template("inventario.html")
+	return redirect("/inventario")
 
 @app.route("/eliminarProducto/<id>")
 def eliminarProducto(id):
