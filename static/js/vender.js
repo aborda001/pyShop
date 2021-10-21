@@ -73,13 +73,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		for (lista of tbodyLista.children) {
 			idProducto = lista.getAttribute('idProducto');
 			cantidad = lista.children[3].innerText;
-			precio = lista.children[4].innerText.replace(',', '');
-			total = lista.children[5].innerText.replace(',', '');
+			precio = lista.children[4].innerText.replace(/\D/g, '');
+			total = lista.children[5].innerText.replace(/\D/g, '');
 			detalle = {
 				'idProducto': idProducto,
 				'cantidad': cantidad,
-				'precio': precio.replace(',', ''),
-				'total': total.replace(',', '')
+				'precio': precio.replace(/\D/g, ''),
+				'total': total.replace(/\D/g, '')
 			}
 			detallesVenta.push(detalle);
 		}
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		botonBorrar.onclick = () => {
 			filaBorrar = row.getAttribute('id');
 			document.getElementById(filaBorrar).remove();
-			total = row.children[5].innerText.replace(",", "");
+			total = row.children[5].innerText.replace(/\D/g, "");
 			totalVenta = totalVenta - total;
 			ventaTotalSpan.innerHTML = formatearNumero(totalVenta);
 			if (tbodyLista.firstElementChild === null) {
@@ -163,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		botonSumar.onclick = () => {
 			cantidad++;
 			row.children[3].innerText = cantidad;
-			venta = row.children[4].innerText.replace(",", "");
-			total = row.children[5].innerText.replace(",", "");
+			venta = row.children[4].innerText.replace(/\D/g, "");
+			total = row.children[5].innerText.replace(/\D/g, "");
 			row.children[5].innerText = formatearNumero(venta * cantidad);
 			let diferencia = total - (venta * cantidad);
 			total = venta * cantidad;
@@ -175,8 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		botonRestar.onclick = () => {
 			cantidad--;
 			row.children[3].innerText = cantidad;
-			venta = row.children[4].innerText.replace(",", "");
-			total = row.children[5].innerText.replace(",", "");
+			venta = row.children[4].innerText.replace(/\D/g, "");
+			total = row.children[5].innerText.replace(/\D/g, "");
 			row.children[5].innerText = formatearNumero(venta * cantidad);
 			diferencia = total - (venta * cantidad);
 			total = venta * cantidad;
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	//Editar el precio del producto
 	function editarPrecio(id, precioEditado) {
 		fila = document.getElementById(id);
-		totalAnterior = fila.children[5].innerText.replace(",", "");
+		totalAnterior = fila.children[5].innerText.replace(/\D/g, "");
 		precio = fila.children[4];
 		cantidad = fila.children[3].innerText;
 		precio.innerHTML = formatearNumero(precioEditado);
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	btnGenerarVenta.onclick = () => {
 		let cliente, total, venta;
 		cliente = $('#nombreCliente').val();
-		total = ventaTotalModal.innerText.replace(',', '');
+		total = ventaTotalModal.innerText.replace(/\D/g, '');
 		fecha = fechaModal.innerText;
 
 		completarVenta(cliente, total, fecha);
