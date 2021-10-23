@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	function completarVenta(cliente, total, fecha) {
-		cliente = cliente === '' ? 'Cliente ocacional' : cliente;
+		cliente = cliente == false ? 'Cliente ocacional' : cliente;
 
 		let datosVenta = {
 			Cliente: cliente,
